@@ -3,11 +3,23 @@
 #include <QTabWidget>
 #include <QVBoxLayout>
 #include <QLabel>
+
 #include <QPushButton>
 #include <QFontDialog>
 #include <QColorDialog>
 #include <QPalette>
 #include <QFont>
+
+
+#include <QPushButton>
+#include <QFileDialog>
+#include <QFontDialog>
+#include <QColorDialog>
+#include <QFont>
+#include <QPalette>
+
+
+
 
 // 定義主視窗類別，繼承自 QWidget
 class MainWidget : public QWidget {
@@ -23,6 +35,7 @@ public:
         QWidget *captainPage = createCaptainPage();
         tabWidget->addTab(captainPage, "隊長頁");
 
+
         // 建立組員 1 頁面（修改隊長頁面文字顏色）
         QWidget *member1Page = createMember1Page();
         tabWidget->addTab(member1Page, "組員1 - 改文字顏色");
@@ -31,9 +44,22 @@ public:
         QWidget *member2Page = createMember2Page();
         tabWidget->addTab(member2Page, "組員2 - 改文字樣式");
 
+        // 建立組員 3 頁面（顯示檔案路徑）
+        QWidget *member3Page = createMember3Page();
+        tabWidget->addTab(member3Page, "組員3 - 顯示檔案路徑");
+
+        // 建立組員 1 頁面（僅顯示）
+        QWidget *member1Page = createMember1Page();
+        tabWidget->addTab(member1Page, "組員1 - 顯示頁面");
+
+        // 建立組員 2 頁面（僅顯示）
+        QWidget *member2Page = createMember2Page();
+        tabWidget->addTab(member2Page, "組員2 - 顯示頁面");
+
         // 建立組員 3 頁面（僅顯示）
         QWidget *member3Page = createMember3Page();
         tabWidget->addTab(member3Page, "組員3 - 顯示頁面");
+
 
         // 設定主佈局，將 QTabWidget 添加到主視窗中
         QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -71,7 +97,12 @@ private:
         return captainPage;
     }
 
+
     // 建立組員 1 頁面（修改隊長頁面文字顏色）
+
+    // 建立組員 1 頁面（僅顯示）
+
+
     QWidget* createMember1Page() {
         QWidget *memberPage = new QWidget(this);
 
@@ -90,15 +121,40 @@ private:
         // 連接按鈕點擊訊號到槽函數
         connect(changeFontButton, &QPushButton::clicked, this, &MainWidget::changeTextFont);
 
+
+    // 建立組員 2 頁面（僅顯示）
+
+    QWidget* createMember2Page() {
+        QWidget *memberPage = new QWidget(this);
+
+        return memberPage;
+    }
+
+
+    // 建立組員 3 頁面（顯示檔案路徑）
+    QWidget* createMember3Page() {
+        QWidget *memberPage = new QWidget(this);
+        QVBoxLayout *layout = new QVBoxLayout(memberPage);
+
+        // 建立按鈕用於選擇檔案
+        QPushButton *selectFileButton = new QPushButton("選擇檔案", memberPage);
+        layout->addWidget(selectFileButton);
+
+        // 連接按鈕點擊訊號到槽函數
+        connect(selectFileButton, &QPushButton::clicked, this, &MainWidget::selectFile);
+
+
         memberPage->setLayout(layout);
         return memberPage;
     }
+
 
     // 建立組員 3 頁面（僅顯示）
     QWidget* createMember3Page() {
  QWidget *memberPage = new QWidget(this);
         return memberPage;
     }
+
 
 private slots:
     // 槽函數：變更隊長及組員標籤文字顏色
@@ -119,7 +175,7 @@ private slots:
         }
     }
 
-    // 槽函數：變更隊長及組員標籤文字樣式
+
     void changeTextFont() {
         bool ok;
         QFont font = QFontDialog::getFont(&ok, this);
@@ -127,12 +183,37 @@ private slots:
             // 設定隊長的字體
             captainLabel->setFont(font);
 
+
             // 設定組員的字體
             member1Label->setFont(font);
             member2Label->setFont(font);
             member3Label->setFont(font);
         }
     }
+
+        }
+    }
+
+    // 槽函數：選擇檔案並更新隊長標籤的文字
+    void selectFile() {
+        QString fileName = QFileDialog::getOpenFileName(this, "選擇檔案", "", "所有檔案 (*)");
+        if (!fileName.isEmpty()) {
+            // 僅顯示檔案路徑
+            captainLabel->setText(" " + fileName);
+            member1Label->setText("" );
+            member2Label->setText("");
+            member3Label->setText("" );
+        }
+    }
+
+    // 建立組員 3 頁面（僅顯示）
+    QWidget* createMember3Page() {
+        QWidget *memberPage = new QWidget(this);
+
+        return memberPage;
+    }
+
+
 };
 
 // 主程式進入點
