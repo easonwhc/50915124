@@ -3,12 +3,15 @@
 #include <QTabWidget>
 #include <QVBoxLayout>
 #include <QLabel>
+
 #include <QPushButton>
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QColorDialog>
 #include <QFont>
 #include <QPalette>
+
+
 
 // 定義主視窗類別，繼承自 QWidget
 class MainWidget : public QWidget {
@@ -24,6 +27,7 @@ public:
         QWidget *captainPage = createCaptainPage();
         tabWidget->addTab(captainPage, "隊長頁");
 
+
         // 建立組員 1 頁面（修改隊長頁面文字顏色）
         QWidget *member1Page = createMember1Page();
         tabWidget->addTab(member1Page, "組員1 - 改文字顏色");
@@ -35,6 +39,19 @@ public:
         // 建立組員 3 頁面（顯示檔案路徑）
         QWidget *member3Page = createMember3Page();
         tabWidget->addTab(member3Page, "組員3 - 顯示檔案路徑");
+
+        // 建立組員 1 頁面（僅顯示）
+        QWidget *member1Page = createMember1Page();
+        tabWidget->addTab(member1Page, "組員1 - 顯示頁面");
+
+        // 建立組員 2 頁面（僅顯示）
+        QWidget *member2Page = createMember2Page();
+        tabWidget->addTab(member2Page, "組員2 - 顯示頁面");
+
+        // 建立組員 3 頁面（僅顯示）
+        QWidget *member3Page = createMember3Page();
+        tabWidget->addTab(member3Page, "組員3 - 顯示頁面");
+
 
         // 設定主佈局，將 QTabWidget 添加到主視窗中
         QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -72,19 +89,26 @@ private:
         return captainPage;
     }
 
+
     // 建立組員 1 頁面（修改隊長頁面文字顏色）
+
+    // 建立組員 1 頁面（僅顯示）
+
     QWidget* createMember1Page() {
         QWidget *memberPage = new QWidget(this);
 
         return memberPage;
     }
 
-    // 建立組員 2 頁面（修改隊長頁面文字樣式）
+
+    // 建立組員 2 頁面（僅顯示）
+
     QWidget* createMember2Page() {
         QWidget *memberPage = new QWidget(this);
 
         return memberPage;
     }
+
 
     // 建立組員 3 頁面（顯示檔案路徑）
     QWidget* createMember3Page() {
@@ -142,6 +166,14 @@ private slots:
             member3Label->setText("" );
         }
     }
+
+    // 建立組員 3 頁面（僅顯示）
+    QWidget* createMember3Page() {
+        QWidget *memberPage = new QWidget(this);
+
+        return memberPage;
+    }
+
 };
 
 // 主程式進入點
