@@ -5,11 +5,19 @@
 #include <QLabel>
 
 #include <QPushButton>
+#include <QFontDialog>
+#include <QColorDialog>
+#include <QPalette>
+#include <QFont>
+
+
+#include <QPushButton>
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QColorDialog>
 #include <QFont>
 #include <QPalette>
+
 
 
 
@@ -94,11 +102,24 @@ private:
 
     // 建立組員 1 頁面（僅顯示）
 
+
     QWidget* createMember1Page() {
         QWidget *memberPage = new QWidget(this);
 
         return memberPage;
     }
+
+    // 建立組員 2 頁面（修改隊長頁面文字樣式）
+    QWidget* createMember2Page() {
+        QWidget *memberPage = new QWidget(this);
+        QVBoxLayout *layout = new QVBoxLayout(memberPage);
+
+        // 建立按鈕用於選擇字體樣式
+        QPushButton *changeFontButton = new QPushButton("選擇文字樣式", memberPage);
+        layout->addWidget(changeFontButton);
+
+        // 連接按鈕點擊訊號到槽函數
+        connect(changeFontButton, &QPushButton::clicked, this, &MainWidget::changeTextFont);
 
 
     // 建立組員 2 頁面（僅顯示）
@@ -122,9 +143,18 @@ private:
         // 連接按鈕點擊訊號到槽函數
         connect(selectFileButton, &QPushButton::clicked, this, &MainWidget::selectFile);
 
+
         memberPage->setLayout(layout);
         return memberPage;
     }
+
+
+    // 建立組員 3 頁面（僅顯示）
+    QWidget* createMember3Page() {
+ QWidget *memberPage = new QWidget(this);
+        return memberPage;
+    }
+
 
 private slots:
     // 槽函數：變更隊長及組員標籤文字顏色
@@ -145,13 +175,22 @@ private slots:
         }
     }
 
-    // 槽函數：變更隊長的字體樣式
+
     void changeTextFont() {
         bool ok;
         QFont font = QFontDialog::getFont(&ok, this);
         if (ok) {
             // 設定隊長的字體
             captainLabel->setFont(font);
+
+
+            // 設定組員的字體
+            member1Label->setFont(font);
+            member2Label->setFont(font);
+            member3Label->setFont(font);
+        }
+    }
+
         }
     }
 
@@ -173,6 +212,7 @@ private slots:
 
         return memberPage;
     }
+
 
 };
 
